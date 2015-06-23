@@ -13,7 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.support.v4.widget.DrawerLayout;
 
-import com.demotask.carsshow.NavigationDrawerFragment;
+import com.demotask.carsshow.fragments.NavigationDrawerFragment;
 import com.demotask.carsshow.R;
 
 public class MainActivity extends ActionBarActivity

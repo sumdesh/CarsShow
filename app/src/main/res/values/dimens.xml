@@ -6,4 +6,56 @@
     <!-- Per the design guidelines, navigation drawers should be between 240dp and 320dp:
          https://developer.android.com/design/patterns/navigation-drawer.html -->
     <dimen name="navigation_drawer_width">240dp</dimen>
+
+    <dimen name="margin_2">2dp</dimen>
+    <dimen name="margin_3">3dp</dimen>
+    <dimen name="margin_5">5dp</dimen>
+    <dimen name="margin_8">8dp</dimen>
+    <dimen name="margin_10">10dp</dimen>
+    <dimen name="margin_15">15dp</dimen>
+    <dimen name="margin_25">25dp</dimen>
+    <dimen name="padding_1">1dp</dimen>
+    <dimen name="padding_2">2dp</dimen>
+    <dimen name="padding_3">3dp</dimen>
+    <dimen name="padding_5">5dp</dimen>
+    <dimen name="padding_8">8dp</dimen>
+    <dimen name="padding_10">10dp</dimen>
+    <dimen name="padding_minus_10">-10dp</dimen>
+    <dimen name="text_size_9">9sp</dimen>
+    <dimen name="text_size_8">8sp</dimen>
+    <dimen name="text_size_10">10sp</dimen>
+    <dimen name="text_size_11">11sp</dimen>
+    <dimen name="text_size_12">12sp</dimen>
+    <dimen name="text_size_14">14sp</dimen>
+    <dimen name="text_size_16">16sp</dimen>
+    <dimen name="text_size_18">18sp</dimen>
+
+    <!-- cards related -->
+    <dimen name="card_thumbnail">56dp</dimen>
+    <dimen name="card_thumbnail_margin">5dp</dimen>
+    <dimen name="card_thumbnail_margin_top">3dp</dimen>
+    <dimen name="card_title_margin_sides">5dp</dimen>
+    <dimen name="card_content_margin_top">3dp</dimen>
+    <dimen name="card_title">16sp</dimen>
+    <dimen name="card_content">12sp</dimen>
+    <dimen name="card_margin_horizontal">5dp</dimen>
+    <dimen name="card_margin_vertical">3dp</dimen>
+    <dimen name="card_padding_vertical">10dp</dimen>
+    <dimen name="card_padding_vertical_taller">7dp</dimen>
+    <dimen name="card_header">21sp</dimen>
+    <dimen name="card_subheader">15sp</dimen>
+    <dimen name="card_header_padding_top">30dp</dimen>
+    <dimen name="card_header_padding_horizontal">20dp</dimen>
+    <dimen name="card_header_button_text">13sp</dimen>
+    <dimen name="card_header_button_padding_side">8dp</dimen>
+    <dimen name="card_header_button_padding_top">5dp</dimen>
+    <dimen name="card_header_button_margin_left">10dp</dimen>
+    <dimen name="card_action_touchdelegate">25dp</dimen>
+
+    <!-- cards related -->
+    <dimen name="actionbar_switch_track_corner">50dp</dimen>
+    <dimen name="actionbar_switch_min_width">40dp</dimen>
+    <dimen name="actionbar_switch_min_height">20dp</dimen>
+
+
 </resources>

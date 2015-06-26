@@ -2,6 +2,9 @@ package com.demotask.carsshow.webservice;
 
 import android.content.Context;
 
+import com.demotask.carsshow.R;
+import com.squareup.okhttp.OkHttpClient;
+
 import java.io.InputStream;
 import java.security.GeneralSecurityException;
 import java.security.KeyStore;
@@ -11,18 +14,16 @@ import javax.net.ssl.SSLSocketFactory;
 import javax.net.ssl.TrustManager;
 
 import retrofit.RestAdapter;
-import retrofit.RestAdapter.LogLevel;
 import retrofit.client.OkClient;
-import com.squareup.okhttp.OkHttpClient;
 
 
 /**
  * Created by edrsoftware on 25.06.15.
  */
-public class RetroftAdapterBuilder {
+public class RetrofitAdapterBuilder {
 
     public static retrofit.RestAdapter buildAdapter(Context context) {
-        return buildAdapter(context, RESTServiceConstants.currentWebserviceUrl);
+        return buildAdapter(context, RESTServiceConstants.serverUrl);
     }
 
     public static retrofit.RestAdapter buildAdapter(Context context, String serverUrl) {
@@ -32,21 +33,8 @@ public class RetroftAdapterBuilder {
 
         // build the REST Adapter
         RestAdapter.Builder b = new RestAdapter.Builder();
-        b.setRequestInterceptor(new AuthorizationInterceptor());
         b.setEndpoint(serverUrl);
         b.setClient(new OkClient(okHttpClient));
-
-        if (AnalyticsDimensions.UserType.PRODUCTIVE.equals(ApplicationConstants.ANALYTICS_USER_TYPE)) {
-            b.setLogLevel(LogLevel.BASIC);
-        } else {
-            b.setLogLevel(LogLevel.FULL);
-        }
-
-        // GsonBuilder builder = new GsonBuilder();
-        // builder.setDateFormat(DateUtil.asanaFormatString);
-
-        // GsonConverter converter = new GsonConverter(builder.create());
-        // b.setConverter(converter);
 
         RestAdapter ra = b.build();
 
@@ -85,8 +73,5 @@ public class RetroftAdapterBuilder {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-    }
-
-    private RetrofitAdapterBuilder() {
     }
 }

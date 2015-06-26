@@ -1,6 +1,7 @@
 package com.demotask.carsshow.activities;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
@@ -13,9 +14,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.support.v4.widget.DrawerLayout;
 
+import com.demotask.carsshow.backgroundtasks.CarsInfoDownloadService;
+import com.demotask.carsshow.core.ApplicationState;
+import com.demotask.carsshow.events.CarsDownloadFinishedEvent;
 import com.demotask.carsshow.fragments.CarsListViewFragment;
 import com.demotask.carsshow.fragments.NavigationDrawerFragment;
 import com.demotask.carsshow.R;
+import com.demotask.carsshow.webservice.Car;
+import com.squareup.otto.Subscribe;
+
+import java.util.List;
 
 public class MainActivity extends ActionBarActivity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks {
@@ -24,6 +32,8 @@ public class MainActivity extends ActionBarActivity
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
      */
     private NavigationDrawerFragment mNavigationDrawerFragment;
+
+    private List<Car> carsInfo;
 
     /**
      * Used to store the last screen title. For use in {@link #restoreActionBar()}.
@@ -34,6 +44,7 @@ public class MainActivity extends ActionBarActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        ApplicationState.getInstance().getEventBus().register(this);
 
         mNavigationDrawerFragment = (NavigationDrawerFragment)
                 getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
@@ -43,6 +54,10 @@ public class MainActivity extends ActionBarActivity
         mNavigationDrawerFragment.setUp(
                 R.id.navigation_drawer,
                 (DrawerLayout) findViewById(R.id.drawer_layout));
+
+        //Starting cars info download on background
+        Intent service = new Intent(this, CarsInfoDownloadService.class);
+        startService(service);
     }
 
     @Override
@@ -60,7 +75,7 @@ public class MainActivity extends ActionBarActivity
 
             case 1:
                 fragmentManager.beginTransaction()
-                        .replace(R.id.container, PlaceholderFragment.newInstance(position + 1))
+                        .replace(R.id.container, CarsListViewFragment.newInstance())
                         .commit();
                 break;
 
@@ -80,9 +95,6 @@ public class MainActivity extends ActionBarActivity
                 break;
             case 2:
                 mTitle = getString(R.string.title_section2);
-                break;
-            case 3:
-                mTitle = getString(R.string.title_section3);
                 break;
         }
     }
@@ -121,6 +133,10 @@ public class MainActivity extends ActionBarActivity
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Subscribe public void carsInfoAvailbale(CarsDownloadFinishedEvent event){
+        carsInfo = event.downloadedCarsInfo;
     }
 
     /**

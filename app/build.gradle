@@ -23,9 +23,22 @@ dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'com.android.support:appcompat-v7:22.2.0'
 
+    //Google Maps Android API
     compile 'com.google.android.gms:play-services:7.5.0'
 
+    //Retrofit: A type-safe REST client for Android
     compile 'com.squareup.retrofit:retrofit:1.9.0'
+
+    //OKHttp: Retrofit will automatically use OkHttp (version 2.0 or newer) when it is present.
     compile 'com.squareup.okhttp:okhttp-urlconnection:2.0.0'
     compile 'com.squareup.okhttp:okhttp:2.0.0'
+
+    //Picasso: A powerful image downloading and caching library for Android
+    compile 'com.squareup.picasso:picasso:2.5.2'
+
+    //Otto: An enhanced event bus with emphasis on Android
+    compile 'com.squareup:otto:1.3.8'
+
+    //Butter Knife: View "injection" library for Android
+    compile 'com.jakewharton:butterknife:6.1.0'
 }

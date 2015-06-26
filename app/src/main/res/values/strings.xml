@@ -1,10 +1,12 @@
 <resources>
+    <!-- Password for the SSL KeyStore. Don't change this! -->
+    <string name="mystore_password">ez24get</string>
+
     <string name="app_name">CarsShow</string>
     <string name="google_maps_key">AIzaSyCamXzS4YYmwXTG_oQ2f3Q44RYY_YHdbKI</string>
 
-    <string name="title_section1">Section 1</string>
-    <string name="title_section2">Section 2</string>
-    <string name="title_section3">Section 3</string>
+    <string name="title_section1">Cars on Map</string>
+    <string name="title_section2">Cars on List</string>
 
     <string name="map_view">Map View</string>
     <string name="list_view">List View</string>
@@ -17,4 +19,7 @@
     <string name="action_settings">Settings</string>
     <string name="title_activity_maps">MapsActivity</string>
     <string name="hello_world">Hello world!</string>
+
+    <string name="loading">loading...</string>
+
 </resources>

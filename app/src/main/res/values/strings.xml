@@ -3,7 +3,8 @@
     <string name="mystore_password">ez24get</string>
 
     <string name="app_name">CarsShow</string>
-    <string name="google_maps_key">AIzaSyCamXzS4YYmwXTG_oQ2f3Q44RYY_YHdbKI</string>
+    <string name="google_maps_key_1">AIzaSyCamXzS4YYmwXTG_oQ2f3Q44RYY_YHdbKI</string>
+    <string name="google_maps_key_2">AIzaSyB9xiYwQq5IlSVb9LZsbcPwBMXd9p9BAak</string>
 
     <string name="title_section1">Cars on Map</string>
     <string name="title_section2">Cars on List</string>
@@ -21,5 +22,8 @@
     <string name="hello_world">Hello world!</string>
 
     <string name="loading">loading...</string>
+
+<!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

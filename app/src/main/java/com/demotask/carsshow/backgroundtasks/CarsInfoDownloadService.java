@@ -4,13 +4,11 @@ import android.app.IntentService;
 import android.content.Intent;
 
 import com.demotask.carsshow.core.ApplicationState;
-import com.demotask.carsshow.events.CarsDownloadFinishedEvent;
 import com.demotask.carsshow.webservice.Car;
 import com.demotask.carsshow.webservice.ICarsService;
 import com.squareup.otto.Bus;
 
 import java.util.List;
-import java.util.logging.Logger;
 
 /**
  * Created by edrsoftware on 26.06.15.

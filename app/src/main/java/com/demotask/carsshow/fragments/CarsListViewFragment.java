@@ -1,6 +1,5 @@
 package com.demotask.carsshow.fragments;
 
-import android.app.ActionBar;
 import android.app.Activity;
 import android.os.Bundle;
 

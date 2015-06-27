@@ -1,7 +1,5 @@
 package com.demotask.carsshow.webservice;
 
-import android.test.suitebuilder.annotation.LargeTest;
-
 import java.util.List;
 
 import retrofit.http.GET;

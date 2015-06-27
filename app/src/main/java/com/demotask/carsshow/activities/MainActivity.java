@@ -2,24 +2,25 @@ package com.demotask.carsshow.activities;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.support.v7.app.ActionBarActivity;
-import android.support.v7.app.ActionBar;
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.os.Bundle;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarActivity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.support.v4.widget.DrawerLayout;
 
+import com.demotask.carsshow.R;
 import com.demotask.carsshow.backgroundtasks.CarsInfoDownloadService;
 import com.demotask.carsshow.core.ApplicationState;
 import com.demotask.carsshow.events.CarsDownloadFinishedEvent;
 import com.demotask.carsshow.fragments.CarsListViewFragment;
+import com.demotask.carsshow.fragments.MapsFragment;
 import com.demotask.carsshow.fragments.NavigationDrawerFragment;
-import com.demotask.carsshow.R;
 import com.demotask.carsshow.webservice.Car;
 import com.squareup.otto.Subscribe;
 
@@ -69,7 +70,7 @@ public class MainActivity extends ActionBarActivity
 
             case 0:
                 fragmentManager.beginTransaction()
-                        .replace(R.id.container, PlaceholderFragment.newInstance(position + 1))
+                        .replace(R.id.container, MapsFragment.newInstance())
                         .commit();
                 break;
 
@@ -81,7 +82,7 @@ public class MainActivity extends ActionBarActivity
 
             default:
                 fragmentManager.beginTransaction()
-                        .replace(R.id.container, PlaceholderFragment.newInstance(position + 1))
+                        .replace(R.id.container, CarsListViewFragment.newInstance())
                         .commit();
                 break;
         }

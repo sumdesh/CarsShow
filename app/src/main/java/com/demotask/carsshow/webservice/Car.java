@@ -13,9 +13,9 @@ public class Car {
     public String group;
     public String color;
     public String series;
-    public Character fuelType;
+    public char fuelType;
     public double fuelLevel;
-    public Character transmission;
+    public char transmission;
     public String licensePlate;
     public double latitude;
     public double longitude;

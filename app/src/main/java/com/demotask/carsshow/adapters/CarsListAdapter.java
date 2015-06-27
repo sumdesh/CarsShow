@@ -6,14 +6,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
-import android.widget.ListAdapter;
 import android.widget.TextView;
 
 import com.demotask.carsshow.R;
 import com.demotask.carsshow.webservice.Car;
 import com.squareup.picasso.Picasso;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.ButterKnife;
@@ -60,9 +58,11 @@ public class CarsListAdapter extends ArrayAdapter<Car> {
         double fuelLevel = Math.round(car.fuelLevel*100.00);
         vh.fuelIndicatorValue.setText(String.valueOf(fuelLevel));
 
-        if (car.transmission.equals("A")){
+        if (car.transmission == 'A'){
+            vh.carTransmission.setImageResource(R.drawable.ic_automatic_transmission);
             vh.carTransmissionValue.setText("Automatic");
         }else{
+            vh.carTransmission.setImageResource(R.drawable.ic_manual_transmission);
             vh.carTransmissionValue.setText("Manual");
         }
 
@@ -96,6 +96,9 @@ public class CarsListAdapter extends ArrayAdapter<Car> {
 
         @InjectView(R.id.fuelIndicatorValue)
         public TextView fuelIndicatorValue;
+
+        @InjectView(R.id.carTransmission)
+        public ImageView carTransmission;
 
         @InjectView(R.id.carTransmissionValue)
         public TextView carTransmissionValue;

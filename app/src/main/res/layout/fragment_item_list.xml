@@ -11,12 +11,12 @@
 </FrameLayout>-->
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="110dp">
 
     <ImageView
         android:id="@+id/icon1"
         android:layout_width="110dp"
-        android:layout_height="130dp"
+        android:layout_height="110dp"
         android:layout_margin="5dp"
         android:src="@drawable/ic_car" />
 
@@ -56,10 +56,11 @@
 
             <ImageView
                 android:id="@+id/carLocation"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:src="@drawable/ic_maps_place" />
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:scaleType="fitStart"
+                android:adjustViewBounds="true"
+                android:src="@drawable/ic_maps_distance" />
 
             <TextView
                 android:id="@+id/carLocationValue"
@@ -78,10 +79,10 @@
 
             <ImageView
                 android:id="@+id/fuelIndicator"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
                 android:gravity="center_vertical"
-                android:src="@drawable/ic_maps_local_gas_station" />
+                android:src="@drawable/ic_fuel_level" />
 
             <TextView
                 android:id="@+id/fuelIndicatorValue"
@@ -100,10 +101,10 @@
 
             <ImageView
                 android:id="@+id/carTransmission"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
                 android:gravity="center_vertical"
-                android:src="@drawable/ic_unknown" />
+                android:src="@drawable/ic_manual_transmission" />
 
             <TextView
                 android:id="@+id/carTransmissionValue"

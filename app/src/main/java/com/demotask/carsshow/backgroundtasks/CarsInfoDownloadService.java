@@ -4,6 +4,7 @@ import android.app.IntentService;
 import android.content.Intent;
 
 import com.demotask.carsshow.core.ApplicationState;
+import com.demotask.carsshow.events.CarsDownloadFinishedEvent;
 import com.demotask.carsshow.webservice.Car;
 import com.demotask.carsshow.webservice.ICarsService;
 import com.squareup.otto.Bus;
@@ -39,7 +40,7 @@ public class CarsInfoDownloadService extends IntentService {
 
         ApplicationState.getInstance().setCarInfo(carsInfo);
 
-        //eventBus.post(new CarsDownloadFinishedEvent(carsInfo));
+        eventBus.post(new CarsDownloadFinishedEvent(carsInfo));
     }
 
     @Override

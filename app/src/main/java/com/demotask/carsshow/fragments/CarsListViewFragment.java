@@ -1,18 +1,25 @@
 package com.demotask.carsshow.fragments;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ListView;
 
 import com.demotask.carsshow.R;
+import com.demotask.carsshow.activities.DetailsActivity;
 import com.demotask.carsshow.adapters.CarsListAdapter;
 import com.demotask.carsshow.core.ApplicationState;
+import com.demotask.carsshow.events.CarSelectedEvent;
 import com.demotask.carsshow.events.CarsDownloadFinishedEvent;
 import com.demotask.carsshow.webservice.Car;
 import com.squareup.otto.Subscribe;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class CarsListViewFragment extends BaseListFragment {
+public class CarsListViewFragment extends BaseListFragment implements AdapterView.OnItemClickListener{
 
     private CarsListAdapter adapter;
 
@@ -31,12 +38,7 @@ public class CarsListViewFragment extends BaseListFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setHasOptionsMenu(true);
-    }
-
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
+        setHasOptionsMenu(false);
     }
 
     @Override
@@ -45,10 +47,19 @@ public class CarsListViewFragment extends BaseListFragment {
         setListShown(false);
         setEmptyText(getString(R.string.loading));
 
+        getListView().setOnItemClickListener(this);
+
         loadList(ApplicationState.getInstance().getCarInfo());
     }
 
-     /**
+    @Override
+    public void onListItemClick(ListView l, View v, int position, long id) {
+        super.onListItemClick(l, v, position, id);
+
+
+    }
+
+    /**
      * The default content for this Fragment has a TextView that is shown when
      * the list is empty. If you would like to change the text, call this method
      * to supply the text it should use.
@@ -58,19 +69,27 @@ public class CarsListViewFragment extends BaseListFragment {
     }
 
     @Subscribe
-    public void CarsInfoAvailbale(CarsDownloadFinishedEvent event) {
+    public void carsInfoAvailbale(CarsDownloadFinishedEvent event){
+        ApplicationState.getInstance().setCarInfo(event.downloadedCarsInfo);
         loadList(event.downloadedCarsInfo);
     }
 
     private void loadList(List<Car> carsInfo) {
-/*mAdapter = new ArrayAdapter<DummyContent.DummyItem>(getActivity(),
-                android.R.layout.simple_list_item_1, android.R.id.text1, DummyContent.ITEMS);*/
-
         if (adapter == null) {
             adapter = new CarsListAdapter(getActivity(), R.layout.fragment_item, carsInfo);
         }
         setListAdapter(adapter);
         setListShown(true);
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+        Car car = (Car) adapterView.getAdapter().getItem(i);
+        ApplicationState.getInstance().getEventBus().post(new CarSelectedEvent(car));
+
+        Intent carDetailsActivity = new Intent(getActivity(), DetailsActivity.class);
+        carDetailsActivity.putExtra("car_selection",car);
+        startActivity(carDetailsActivity);
     }
 
 

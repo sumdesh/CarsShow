@@ -58,7 +58,7 @@ public class CarsListAdapter extends ArrayAdapter<Car> {
         double fuelLevel = Math.round(car.fuelLevel*100.00);
         vh.fuelIndicatorValue.setText(String.valueOf(fuelLevel));
 
-        if (car.transmission == 'A'){
+        if (car.transmission.equals("A")){
             vh.carTransmission.setImageResource(R.drawable.ic_automatic_transmission);
             vh.carTransmissionValue.setText("Automatic");
         }else{

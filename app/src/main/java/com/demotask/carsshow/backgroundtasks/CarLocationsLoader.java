@@ -30,28 +30,29 @@ public class CarLocationsLoader extends AsyncTaskLoader<List<CarLocation>> {
 
         // Return whether this load has been reset. That is, either the loader has not yet been started for the first
         // time, or its reset() has been called.
-        if (isReset()){
+        if (isReset()) {
             reset();
         }
 
         // Return whether this load has been started. That is, its startLoading() has been called and no calls to
         // stopLoading() or reset() have yet been made.
-        if (isStarted()){
+        if (isStarted()) {
             super.deliverResult(data);
         }
     }
 
     @Override
     public List<CarLocation> loadInBackground() {
-        List<CarLocation> carLocations = new ArrayList< CarLocation>();
+        List<CarLocation> carLocations = new ArrayList<CarLocation>();
         List<Car> carsInfo = ApplicationState.getInstance().getCarInfo();
-
-        for(Car item: carsInfo) {
-            CarLocation location = new CarLocation(item.latitude, item. longitude, item.modelName);
-            carLocations.add(location);
+        if (carsInfo != null) {
+            for (Car item : carsInfo) {
+                CarLocation location = new CarLocation(item.latitude, item.longitude, item.modelName);
+                carLocations.add(location);
+            }
+            return carLocations;
         }
-
-        return carLocations;
+        return null;
     }
 
     @Override
@@ -64,7 +65,7 @@ public class CarLocationsLoader extends AsyncTaskLoader<List<CarLocation>> {
         super.onReset();
         stopLoading();
 
-        if (this.data != null){
+        if (this.data != null) {
             this.data = null;
         }
     }

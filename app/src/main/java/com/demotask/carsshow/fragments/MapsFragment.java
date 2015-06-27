@@ -16,6 +16,8 @@ import android.view.ViewGroup;
 
 import com.demotask.carsshow.R;
 import com.demotask.carsshow.backgroundtasks.CarLocationsLoader;
+import com.demotask.carsshow.core.ApplicationState;
+import com.demotask.carsshow.events.CarsDownloadFinishedEvent;
 import com.demotask.carsshow.pojos.CarLocation;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -25,6 +27,7 @@ import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.squareup.otto.Subscribe;
 
 import java.util.List;
 
@@ -100,24 +103,6 @@ public class MapsFragment extends BaseFragment implements OnMapReadyCallback, Lo
     }
 
     @Override
-    public void onMapReady(GoogleMap map) {
-        googleMap = map;
-        // set map type
-        map.setMapType(GoogleMap.MAP_TYPE_NORMAL);
-        map.setMyLocationEnabled(true);
-
-        Location lastKnownLocation = locationManager.getLastKnownLocation(NETWORK_LOCATION_PROVIDER);
-        double lat =  lastKnownLocation.getLatitude();
-        double lng = lastKnownLocation.getLongitude();
-        LatLng coordinate = new LatLng(lat, lng);
-        addMarker(coordinate);
-
-        locationManager.requestLocationUpdates(NETWORK_LOCATION_PROVIDER, 10, 100, this);
-        getLoaderManager().initLoader(LOCATION_LOADER, null, this);
-        //createGAPIClientInstance();
-    }
-
-    @Override
     public void onDestroy() {
         super.onDestroy();
         mMapView.onDestroy();
@@ -130,9 +115,28 @@ public class MapsFragment extends BaseFragment implements OnMapReadyCallback, Lo
     }
 
     @Override
+    public void onMapReady(GoogleMap map) {
+        googleMap = map;
+        // set map type
+        map.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+        map.setMyLocationEnabled(true);
+
+        /*Location lastKnownLocation = locationManager.getLastKnownLocation(NETWORK_LOCATION_PROVIDER);
+        double lat =  lastKnownLocation.getLatitude();
+        double lng = lastKnownLocation.getLongitude();
+        LatLng coordinate = new LatLng(lat, lng);
+        addMarker(coordinate);*/
+
+        locationManager.requestLocationUpdates(NETWORK_LOCATION_PROVIDER, 10, 100, this);
+        getLoaderManager().initLoader(LOCATION_LOADER, null, this);
+        //createGAPIClientInstance();
+    }
+
+    @Override
     public void onLocationChanged(Location location) {
         LatLng location_LatLang = new LatLng(location.getLatitude(),
                 location.getLongitude());
+        addMarker(location_LatLang);
     }
 
     @Override
@@ -174,6 +178,9 @@ public class MapsFragment extends BaseFragment implements OnMapReadyCallback, Lo
         googleMap.animateCamera(CameraUpdateFactory.zoomTo(14));
     }
 
+    public void moveCameraTo(LatLng location) {
+        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(location, 15));
+    }
 
     @Override
     public Loader<List<CarLocation>> onCreateLoader(int id, Bundle args) {
@@ -183,9 +190,9 @@ public class MapsFragment extends BaseFragment implements OnMapReadyCallback, Lo
 
     @Override
     public void onLoadFinished(Loader<List<CarLocation>> loader, List<CarLocation> data) {
-        if (data!= null && data.size() > 0){
-            for(CarLocation location : data){
-                double lat =  location.latitude;
+        if (data != null) {
+            for (CarLocation location : data) {
+                double lat = location.latitude;
                 double lng = location.longitude;
                 LatLng coordinate = new LatLng(lat, lng);
                 addMarker(coordinate, location.carModel, "");
@@ -196,6 +203,11 @@ public class MapsFragment extends BaseFragment implements OnMapReadyCallback, Lo
     @Override
     public void onLoaderReset(Loader<List<CarLocation>> loader) {
 
+    }
 
+    @Subscribe
+    public void carsInfoAvailbale(CarsDownloadFinishedEvent event) {
+        ApplicationState.getInstance().setCarInfo(event.downloadedCarsInfo);
+        getLoaderManager().restartLoader(LOCATION_LOADER, null, this);
     }
 }

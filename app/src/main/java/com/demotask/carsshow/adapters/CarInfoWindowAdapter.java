@@ -5,7 +5,6 @@ import android.location.Address;
 import android.location.Geocoder;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.demotask.carsshow.R;
@@ -13,7 +12,6 @@ import com.demotask.carsshow.webservice.Car;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
-import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
 import java.util.List;

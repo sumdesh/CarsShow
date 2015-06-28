@@ -9,7 +9,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.demotask.carsshow.R;
+import com.demotask.carsshow.core.ApplicationState;
+import com.demotask.carsshow.utility.MapUtility;
 import com.demotask.carsshow.webservice.Car;
+import com.google.android.gms.maps.model.LatLng;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -53,17 +56,23 @@ public class CarsListAdapter extends ArrayAdapter<Car> {
         vh.modelName.setText(car.modelName);
         vh.name.setText(car.name);
 
-        vh.carLocationValue.setText("600m");
+        double distance = MapUtility.getDistance(ApplicationState.HOME_LOCATION, new LatLng(car.latitude, car.longitude));
+        if (distance > 1000.00){
+            distance = distance/1000;
+            vh.carLocationValue.setText(String.format("%.2fkm",distance));
+        }else{
+            vh.carLocationValue.setText(String.format("%.2fm",distance));
+        }
 
         double fuelLevel = Math.round(car.fuelLevel*100.00);
-        vh.fuelIndicatorValue.setText(String.valueOf(fuelLevel));
+        vh.fuelIndicatorValue.setText(String.format("%.0f%%", fuelLevel));
 
         if (car.transmission.equals("A")){
             vh.carTransmission.setImageResource(R.drawable.ic_automatic_transmission);
-            vh.carTransmissionValue.setText("Automatic");
+            vh.carTransmissionValue.setText(R.string.auto_transmission);
         }else{
             vh.carTransmission.setImageResource(R.drawable.ic_manual_transmission);
-            vh.carTransmissionValue.setText("Manual");
+            vh.carTransmissionValue.setText(R.string.manual_transmission);
         }
 
         Picasso.with(getContext())

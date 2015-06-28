@@ -1,2 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+
+    <string name="unknown">Unbekannt</string>
+    <string name="manual_transmission">Manual</string>
+    <string name="auto_transmission">Automatic</string>
+
+    <string name="fuel_type_petrol">Petrol</string>
+    <string name="fuel_type_diesel">Diesel</string>
+
+    <string name="loading">loading</string>
+
+    <string name="map_view">Map Ansicht</string>
+    <string name="list_view">Listenansicht</string>
+
+    <string name="show_details_btn_title">Details</string>
+    <string name="hide_details_btn_title">Schließen</string>
+
+    <string name="number_plate">Kennzeichen</string>
+    <string name="location">Standort</string>
+    <string name="fuel_type">Antrieb</string>
+    <string name="car_group">Auto Group</string>
+    <string name="car_series">Auto Series</string>
+    <string name="inner_cleaniless">Inner Sauberkeit</string>
+
+    <string name="internet_connection_error">Keine Internetverbindung</string>
+    <string name="cars_info_unavailbale">Datei nicht verfügbar</string>
+</resources>

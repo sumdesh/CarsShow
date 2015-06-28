@@ -4,16 +4,41 @@
     android:layout_height="match_parent"
     tools:context="com.demotask.carsshow.fragments.DetailsActivityFragment">
 
-    <include android:id="@+id/car_details"
+    <include
+        android:id="@+id/car_details"
+        layout="@layout/fragment_item_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <Button
+        android:id="@+id/showHideDetails"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        layout="@layout/fragment_item_list"/>
+        android:layout_below="@+id/car_details"
+        android:tag="0"
+        android:text="@string/show_details_btn_title"
+        android:onClick="onShowDetailsClick"/>
+
+    <LinearLayout
+        android:id="@+id/car_other_details"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/showHideDetails"
+        android:animateLayoutChanges="true"
+        android:visibility="gone">
+
+        <include
+            layout="@layout/car_info_windowadapter"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            />
+    </LinearLayout>
 
     <fragment
         android:id="@+id/maps_fragment"
         android:name="com.demotask.carsshow.fragments.MapsFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/car_details" />
+        android:layout_below="@+id/car_other_details" />
 
 </RelativeLayout>

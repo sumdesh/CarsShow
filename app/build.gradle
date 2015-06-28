@@ -41,4 +41,9 @@ dependencies {
 
     //Butter Knife: View "injection" library for Android
     compile 'com.jakewharton:butterknife:6.1.0'
+
+    compile('de.keyboardsurfer.android.widget:crouton:1.8.5@aar') {
+        // exclusion is not necessary, but generally a good idea.
+        exclude group: 'com.google.android', module: 'support-v4'
+    }
 }

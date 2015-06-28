@@ -18,7 +18,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_centerInParent="true"
-            android:text="Number Plate"
+            android:text="@string/number_plate"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:textStyle="bold" />
 
@@ -30,7 +30,6 @@
             android:layout_centerInParent="true"
             android:layout_toRightOf="@+id/numberPlate"
             android:gravity="right"
-            android:text="M-DX6209"
             android:textAppearance="?android:attr/textAppearanceSmall" />
     </RelativeLayout>
 
@@ -49,7 +48,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_centerInParent="true"
-            android:text="Location"
+            android:text="@string/location"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:textStyle="bold" />
 
@@ -61,7 +60,6 @@
             android:layout_centerInParent="true"
             android:layout_toRightOf="@+id/location"
             android:gravity="right"
-            android:text="Schillerstr. 1"
             android:textAppearance="?android:attr/textAppearanceSmall" />
     </RelativeLayout>
 
@@ -79,7 +77,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_centerInParent="true"
-            android:text="Fuel Type"
+            android:text="@string/fuel_type"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:textStyle="bold" />
 
@@ -91,7 +89,6 @@
             android:layout_centerInParent="true"
             android:layout_toRightOf="@+id/fuelType"
             android:gravity="right"
-            android:text="Petrol"
             android:textAppearance="?android:attr/textAppearanceSmall" />
     </RelativeLayout>
 
@@ -109,7 +106,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_centerInParent="true"
-            android:text="Group"
+            android:text="@string/car_group"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:textStyle="bold" />
 
@@ -121,7 +118,6 @@
             android:layout_centerInParent="true"
             android:layout_toRightOf="@+id/carGroup"
             android:gravity="right"
-            android:text="group"
             android:textAppearance="?android:attr/textAppearanceSmall" />
     </RelativeLayout>
     <!--###################################################################-->
@@ -139,7 +135,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_centerInParent="true"
-            android:text="Series"
+            android:text="@string/car_series"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:textStyle="bold" />
 
@@ -151,7 +147,6 @@
             android:layout_centerInParent="true"
             android:layout_toRightOf="@+id/carSeries"
             android:gravity="right"
-            android:text="series"
             android:textAppearance="?android:attr/textAppearanceSmall" />
     </RelativeLayout>
     <!--###################################################################-->
@@ -168,7 +163,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_centerInParent="true"
-            android:text="Inner Cleanlienss"
+            android:text="@string/inner_cleaniless"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:textStyle="bold" />
 
@@ -180,7 +175,6 @@
             android:layout_centerInParent="true"
             android:layout_toRightOf="@+id/innerCleanliness"
             android:gravity="right"
-            android:text="regular"
             android:textAppearance="?android:attr/textAppearanceSmall" />
     </RelativeLayout>
 

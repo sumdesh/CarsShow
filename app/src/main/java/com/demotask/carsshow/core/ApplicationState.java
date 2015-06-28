@@ -4,8 +4,10 @@ import android.content.Context;
 
 import com.demotask.carsshow.webservice.Car;
 import com.demotask.carsshow.webservice.RetrofitAdapterBuilder;
+import com.google.android.gms.maps.model.LatLng;
 import com.squareup.otto.Bus;
 
+import java.util.HashMap;
 import java.util.List;
 
 import retrofit.RestAdapter;
@@ -15,9 +17,12 @@ import retrofit.RestAdapter;
  */
 public class ApplicationState {
 
-    private static ApplicationState instance;
+    public static final LatLng HOME_LOCATION = new LatLng(48.1333, 11.5667);
 
+    private static ApplicationState instance;
     private static List<Car> downloadedCarsInfo;
+    private static HashMap<String, Car> carsMapping;
+
 
     public static ApplicationState getInstance(){
         if (instance == null){
@@ -40,11 +45,21 @@ public class ApplicationState {
     }
 
     public void setCarInfo(List<Car> carInfo){
+        if (carInfo!=null) {
+            carsMapping = new HashMap<String, Car>();
+            for (Car item : carInfo) {
+                carsMapping.put(item.id, item);
+            }
+        }
         this.downloadedCarsInfo = carInfo;
     }
 
     public List<Car>getCarInfo(){
         return downloadedCarsInfo;
+    }
+
+    public HashMap<String, Car> getCarMapping(){
+        return carsMapping;
     }
 
     public <T> T getRestService(Class<T> service) {

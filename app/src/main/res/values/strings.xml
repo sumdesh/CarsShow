@@ -1,16 +1,9 @@
 <resources>
     <!-- Password for the SSL KeyStore. Don't change this! -->
     <string name="mystore_password">ez24get</string>
-
     <string name="app_name">CarsShow</string>
     <string name="google_maps_key_1">AIzaSyCamXzS4YYmwXTG_oQ2f3Q44RYY_YHdbKI</string>
     <string name="google_maps_key_2">AIzaSyB9xiYwQq5IlSVb9LZsbcPwBMXd9p9BAak</string>
-
-    <string name="title_section1">Cars on Map</string>
-    <string name="title_section2">Cars on List</string>
-
-    <string name="map_view">Map View</string>
-    <string name="list_view">List View</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -21,10 +14,33 @@
     <string name="title_activity_maps">MapsActivity</string>
     <string name="hello_world">Hello world!</string>
 
-    <string name="loading">loading...</string>
-
 <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_details">Car Details</string>
+
+    <string name="unknown">Unknown</string>
+    <string name="manual_transmission">Manual</string>
+    <string name="auto_transmission">Automatic</string>
+
+    <string name="fuel_type_petrol">Petrol</string>
+    <string name="fuel_type_diesel">Diesel</string>
+
+    <string name="loading">loading</string>
+
+    <string name="map_view">Map View</string>
+    <string name="list_view">List View</string>
+
+    <string name="show_details_btn_title">Details</string>
+    <string name="hide_details_btn_title">Close</string>
+
+    <string name="number_plate">Number Plate</string>
+    <string name="location">Location</string>
+    <string name="fuel_type">Fuel Type</string>
+    <string name="car_group">Car Group</string>
+    <string name="car_series">Car Series</string>
+    <string name="inner_cleaniless">Inner Cleanliness</string>
+
+    <string name="internet_connection_error">No internet-connection</string>
+    <string name="cars_info_unavailbale">Data not available</string>
 
 </resources>

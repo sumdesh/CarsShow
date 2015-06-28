@@ -5,12 +5,14 @@ package com.demotask.carsshow.pojos;
  */
 public class CarLocation {
 
+    public String carId;
     public double latitude;
     public double longitude;
     public String carModel;
 
 
-    public CarLocation(double latitude, double longitude, String carModel){
+    public CarLocation(String carId, double latitude, double longitude, String carModel){
+        this.carId = carId;
         this.latitude = latitude;
         this.longitude = longitude;
         this.carModel = carModel;

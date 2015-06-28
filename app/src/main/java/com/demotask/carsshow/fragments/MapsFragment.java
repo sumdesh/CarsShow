@@ -2,20 +2,21 @@ package com.demotask.carsshow.fragments;
 
 
 import android.app.Activity;
-import android.app.Dialog;
 import android.app.Fragment;
 import android.content.Context;
-import android.graphics.BitmapFactory;
-import android.location.Criteria;
+import android.location.Address;
+import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.demotask.carsshow.R;
 import com.demotask.carsshow.backgroundtasks.CarLocationsLoader;
@@ -23,36 +24,37 @@ import com.demotask.carsshow.core.ApplicationState;
 import com.demotask.carsshow.events.CarsDownloadFinishedEvent;
 import com.demotask.carsshow.events.MapReadyEvent;
 import com.demotask.carsshow.pojos.CarLocation;
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.squareup.otto.Subscribe;
 
+import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class MapsFragment extends BaseFragment implements OnMapReadyCallback, LocationListener, LoaderManager.LoaderCallbacks<List<CarLocation>> {
 
-    private static final String GPS_PROVIDER = LocationManager.GPS_PROVIDER;
-    private static final LatLng HOME_LOCATION = new LatLng(48.1333, 11.5667);
     private static final String NETWORK_LOCATION_PROVIDER = LocationManager.NETWORK_PROVIDER;
 
+    private Marker homeMarker;
     private MapView mMapView;
     private GoogleMap googleMap;
     private LocationRequest locationRequest;
     private LocationManager locationManager;
+    HashMap<MarkerOptions, String> markersMap;
 
     // Request code to use when launching the resolution activity
     private static final int REQUEST_RESOLVE_ERROR = 1001;
@@ -77,6 +79,7 @@ public class MapsFragment extends BaseFragment implements OnMapReadyCallback, Lo
         super.onAttach(activity);
         locationManager = (LocationManager) getActivity()
                 .getSystemService(Context.LOCATION_SERVICE);
+
     }
 
     @Override
@@ -130,57 +133,84 @@ public class MapsFragment extends BaseFragment implements OnMapReadyCallback, Lo
         map.setMapType(GoogleMap.MAP_TYPE_NORMAL);
         map.setMyLocationEnabled(true);
 
-        addMarker(HOME_LOCATION);
-        locationManager.requestLocationUpdates(NETWORK_LOCATION_PROVIDER, 10, 100, this);
+        if ( !locationManager.isProviderEnabled( LocationManager.GPS_PROVIDER ) ) {
+            addMarker(ApplicationState.HOME_LOCATION);
+            locationManager.requestLocationUpdates(NETWORK_LOCATION_PROVIDER, 5000, 10, this);
+        }else{
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,5000,10,this);
+        }
+
     }
 
     @Override
-    public void onLocationChanged(Location location) {
-        LatLng location_LatLang = new LatLng(location.getLatitude(),
-                location.getLongitude());
+    public void onLocationChanged(Location loc) {
+        LatLng location_LatLang = new LatLng(loc.getLatitude(), loc.getLongitude());
+
+        String longitude = "Longitude: " + loc.getLongitude();
+        Log.v("onLocationChanged", longitude);
+        String latitude = "Latitude: " + loc.getLatitude();
+        Log.v("onLocationChanged", latitude);
+
+        /*------- To get city name from coordinates -------- */
+        String cityName = null;
+        Geocoder gcd = new Geocoder(getActivity(), Locale.getDefault());
+        List<Address> addresses;
+        try {
+            addresses = gcd.getFromLocation(loc.getLatitude(),
+                    loc.getLongitude(), 1);
+            if (addresses.size() > 0)
+                System.out.println(addresses.get(0).getLocality());
+            cityName = addresses.get(0).getLocality();
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+        String s = longitude + "\n" + latitude + "\n\nMy Current City is: "
+                + cityName;
+        Toast.makeText(getActivity(),s,Toast.LENGTH_SHORT).show();
         addMarker(location_LatLang);
     }
 
     @Override
     public void onStatusChanged(String s, int i, Bundle bundle) {
-
+        //Toast.makeText(getActivity(),s,Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void onProviderEnabled(String s) {
-
+        //Toast.makeText(getActivity(),s,Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void onProviderDisabled(String s) {
-
+        //Toast.makeText(getActivity(),s,Toast.LENGTH_SHORT).show();
     }
 
     private void addMarker(LatLng location) {
 
-        googleMap.addMarker(new MarkerOptions()
+        homeMarker =  googleMap.addMarker(new MarkerOptions()
                 .position(location)
                 .title("You")
                 .snippet("You are here!!")
-                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
+                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)));
 
         // Zoom in the Google Map
-        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(location, 10));
+        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(location, 12));
         //googleMap.animateCamera(CameraUpdateFactory.zoomTo(14));
 
         getLoaderManager().initLoader(LOCATION_LOADER, null, this);
     }
 
     private void addMarker(LatLng location, String title, String snippet) {
-        // map.setMyLocationEnabled(true);
         // Zoom in the Google Map
         //googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(location, 15));
-
-        googleMap.addMarker(new MarkerOptions()
+        MarkerOptions marker = new MarkerOptions()
                 .position(location)
                 .title(title)
                 .snippet(snippet)
-                .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_maps_distance)));
+                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_CYAN));
+
+        googleMap.addMarker(marker);
         //googleMap.animateCamera(CameraUpdateFactory.zoomTo(14));
     }
 
@@ -211,7 +241,7 @@ public class MapsFragment extends BaseFragment implements OnMapReadyCallback, Lo
                 double lat = location.latitude;
                 double lng = location.longitude;
                 LatLng coordinate = new LatLng(lat, lng);
-                addMarker(coordinate, location.carModel, "");
+                addMarker(coordinate, location.carModel, location.carId);
             }
 
             //To access GoogleMaps instance in details fragment
@@ -226,7 +256,9 @@ public class MapsFragment extends BaseFragment implements OnMapReadyCallback, Lo
 
     @Subscribe
     public void carsInfoAvailbale(CarsDownloadFinishedEvent event) {
+        markersMap = new HashMap<MarkerOptions, String>();
         ApplicationState.getInstance().setCarInfo(event.downloadedCarsInfo);
+        getActivity().setProgressBarIndeterminateVisibility(false);
         getLoaderManager().restartLoader(LOCATION_LOADER, null, this);
     }
 }

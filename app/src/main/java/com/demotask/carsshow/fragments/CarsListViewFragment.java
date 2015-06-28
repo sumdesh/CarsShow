@@ -1,23 +1,24 @@
 package com.demotask.carsshow.fragments;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ListView;
 
 import com.demotask.carsshow.R;
 import com.demotask.carsshow.activities.DetailsActivity;
 import com.demotask.carsshow.adapters.CarsListAdapter;
 import com.demotask.carsshow.core.ApplicationState;
-import com.demotask.carsshow.events.CarSelectedEvent;
 import com.demotask.carsshow.events.CarsDownloadFinishedEvent;
+import com.demotask.carsshow.utility.NetworkUtility;
 import com.demotask.carsshow.webservice.Car;
 import com.squareup.otto.Subscribe;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import de.keyboardsurfer.android.widget.crouton.Crouton;
+import de.keyboardsurfer.android.widget.crouton.Style;
 
 public class CarsListViewFragment extends BaseListFragment implements AdapterView.OnItemClickListener{
 
@@ -57,7 +58,16 @@ public class CarsListViewFragment extends BaseListFragment implements AdapterVie
         setListShown(false);
         setEmptyText(getString(R.string.loading));
         getListView().setOnItemClickListener(this);
-        loadList(displayList);
+
+        if (!NetworkUtility.isNetworkAvailable(getActivity())){
+            Crouton.makeText(getActivity(), R.string.internet_connection_error, Style.ALERT).show();
+        }
+
+        if (displayList != null){
+            loadList(displayList);
+        }else{
+            Crouton.makeText(getActivity(), R.string.cars_info_unavailbale, Style.INFO).show();
+        }
     }
 
     /**
@@ -87,8 +97,6 @@ public class CarsListViewFragment extends BaseListFragment implements AdapterVie
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
         Car car = (Car) adapterView.getAdapter().getItem(i);
-        ApplicationState.getInstance().getEventBus().post(new CarSelectedEvent(car));
-
         Intent carDetailsActivity = new Intent(getActivity(), DetailsActivity.class);
         carDetailsActivity.putExtra("car_selection_position",i);
         carDetailsActivity.putExtra("car_selection",car);

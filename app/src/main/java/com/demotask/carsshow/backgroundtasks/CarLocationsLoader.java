@@ -45,9 +45,10 @@ public class CarLocationsLoader extends AsyncTaskLoader<List<CarLocation>> {
     public List<CarLocation> loadInBackground() {
         List<CarLocation> carLocations = new ArrayList<CarLocation>();
         List<Car> carsInfo = ApplicationState.getInstance().getCarInfo();
+
         if (carsInfo != null) {
             for (Car item : carsInfo) {
-                CarLocation location = new CarLocation(item.latitude, item.longitude, item.modelName);
+                CarLocation location = new CarLocation(item.id, item.latitude, item.longitude, item.modelName);
                 carLocations.add(location);
             }
             return carLocations;

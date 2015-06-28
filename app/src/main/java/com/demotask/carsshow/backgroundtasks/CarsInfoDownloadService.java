@@ -35,12 +35,17 @@ public class CarsInfoDownloadService extends IntentService {
         ApplicationState state = ApplicationState.getInstance();
         Bus eventBus = state.getEventBus();
 
-        ICarsService service = state.getRestService(ICarsService.class);
-        List<Car> carsInfo = service.listCars();
+        try {
+            ICarsService service = state.getRestService(ICarsService.class);
+            List<Car> carsInfo = service.listCars();
 
-        ApplicationState.getInstance().setCarInfo(carsInfo);
+            ApplicationState.getInstance().setCarInfo(carsInfo);
 
-        eventBus.post(new CarsDownloadFinishedEvent(carsInfo));
+            eventBus.post(new CarsDownloadFinishedEvent(carsInfo));
+
+        }catch (Exception exp){
+
+        }
     }
 
     @Override

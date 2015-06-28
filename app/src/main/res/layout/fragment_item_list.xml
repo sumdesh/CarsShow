@@ -8,6 +8,7 @@
         android:layout_width="110dp"
         android:layout_height="110dp"
         android:layout_margin="5dp"
+        android:adjustViewBounds="true"
         android:src="@drawable/ic_car" />
 
     <TextView
@@ -15,11 +16,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignTop="@+id/icon1"
-        android:layout_marginTop="5dp"
         android:layout_marginRight="5dp"
+        android:layout_marginTop="5dp"
         android:layout_toRightOf="@+id/icon1"
-        android:text="Model Name"
         android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="@string/unknown"
         android:textStyle="bold" />
 
     <TextView
@@ -28,16 +29,16 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/modelName"
         android:layout_toRightOf="@+id/icon1"
-        android:text="Name"
+        android:text="@string/unknown"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@+id/icon1"
+        android:layout_alignBottom="@+id/icon1"
         android:layout_below="@+id/name"
         android:layout_marginTop="10dp"
-        android:layout_alignBottom="@+id/icon1"
+        android:layout_toRightOf="@+id/icon1"
         android:orientation="horizontal">
 
         <RelativeLayout
@@ -48,17 +49,17 @@
                 android:id="@+id/carLocation"
                 android:layout_width="35dp"
                 android:layout_height="35dp"
-                android:scaleType="fitStart"
                 android:adjustViewBounds="true"
+                android:scaleType="fitStart"
                 android:src="@drawable/ic_maps_distance" />
 
             <TextView
                 android:id="@+id/carLocationValue"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_toRightOf="@+id/carLocation"
-                android:text="600m"
                 android:layout_centerInParent="true"
+                android:layout_toRightOf="@+id/carLocation"
+                android:text="@string/unknown"
                 android:textAppearance="?android:attr/textAppearanceSmall" />
 
         </RelativeLayout>
@@ -78,9 +79,9 @@
                 android:id="@+id/fuelIndicatorValue"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_toRightOf="@+id/fuelIndicator"
-                android:text="40%"
                 android:layout_centerInParent="true"
+                android:layout_toRightOf="@+id/fuelIndicator"
+                android:text="@string/unknown"
                 android:textAppearance="?android:attr/textAppearanceSmall" />
 
         </RelativeLayout>
@@ -100,9 +101,9 @@
                 android:id="@+id/carTransmissionValue"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_toRightOf="@+id/carTransmission"
-                android:text="Automatic"
                 android:layout_centerInParent="true"
+                android:layout_toRightOf="@+id/carTransmission"
+                android:text="@string/unknown"
                 android:textAppearance="?android:attr/textAppearanceSmall" />
 
         </RelativeLayout>

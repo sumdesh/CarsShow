@@ -2,5 +2,7 @@
 <resources>
 
     <color name="transparent">#00000000</color>
+    <color name="car_info_background_color">#E6E6E600</color>
+
 
 </resources>

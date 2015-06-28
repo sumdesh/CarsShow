@@ -21,6 +21,7 @@ import java.util.List;
 
 public class CarsListViewFragment extends BaseListFragment implements AdapterView.OnItemClickListener{
 
+    private static List<Car> displayList;
     private CarsListAdapter adapter;
 
     /**
@@ -32,6 +33,15 @@ public class CarsListViewFragment extends BaseListFragment implements AdapterVie
 
     public static CarsListViewFragment newInstance() {
         CarsListViewFragment fragment = new CarsListViewFragment();
+        displayList = ApplicationState.getInstance().getCarInfo();
+        return fragment;
+    }
+
+    public static CarsListViewFragment newInstance(Car displayItem) {
+        CarsListViewFragment fragment = new CarsListViewFragment();
+        List<Car>items = new ArrayList<Car>();
+        items.add(displayItem);
+        displayList = items;
         return fragment;
     }
 
@@ -46,17 +56,8 @@ public class CarsListViewFragment extends BaseListFragment implements AdapterVie
         super.onActivityCreated(savedInstanceState);
         setListShown(false);
         setEmptyText(getString(R.string.loading));
-
         getListView().setOnItemClickListener(this);
-
-        loadList(ApplicationState.getInstance().getCarInfo());
-    }
-
-    @Override
-    public void onListItemClick(ListView l, View v, int position, long id) {
-        super.onListItemClick(l, v, position, id);
-
-
+        loadList(displayList);
     }
 
     /**
@@ -77,9 +78,10 @@ public class CarsListViewFragment extends BaseListFragment implements AdapterVie
     private void loadList(List<Car> carsInfo) {
         if (adapter == null) {
             adapter = new CarsListAdapter(getActivity(), R.layout.fragment_item, carsInfo);
+            setListAdapter(adapter);
         }
-        setListAdapter(adapter);
-        setListShown(true);
+
+        //setListShown(true);
     }
 
     @Override
@@ -88,6 +90,7 @@ public class CarsListViewFragment extends BaseListFragment implements AdapterVie
         ApplicationState.getInstance().getEventBus().post(new CarSelectedEvent(car));
 
         Intent carDetailsActivity = new Intent(getActivity(), DetailsActivity.class);
+        carDetailsActivity.putExtra("car_selection_position",i);
         carDetailsActivity.putExtra("car_selection",car);
         startActivity(carDetailsActivity);
     }

@@ -2,8 +2,11 @@ package com.demotask.carsshow.fragments;
 
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.app.Fragment;
 import android.content.Context;
+import android.graphics.BitmapFactory;
+import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -18,13 +21,19 @@ import com.demotask.carsshow.R;
 import com.demotask.carsshow.backgroundtasks.CarLocationsLoader;
 import com.demotask.carsshow.core.ApplicationState;
 import com.demotask.carsshow.events.CarsDownloadFinishedEvent;
+import com.demotask.carsshow.events.MapReadyEvent;
 import com.demotask.carsshow.pojos.CarLocation;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.squareup.otto.Subscribe;
@@ -121,15 +130,8 @@ public class MapsFragment extends BaseFragment implements OnMapReadyCallback, Lo
         map.setMapType(GoogleMap.MAP_TYPE_NORMAL);
         map.setMyLocationEnabled(true);
 
-        /*Location lastKnownLocation = locationManager.getLastKnownLocation(NETWORK_LOCATION_PROVIDER);
-        double lat =  lastKnownLocation.getLatitude();
-        double lng = lastKnownLocation.getLongitude();
-        LatLng coordinate = new LatLng(lat, lng);
-        addMarker(coordinate);*/
-
+        addMarker(HOME_LOCATION);
         locationManager.requestLocationUpdates(NETWORK_LOCATION_PROVIDER, 10, 100, this);
-        getLoaderManager().initLoader(LOCATION_LOADER, null, this);
-        //createGAPIClientInstance();
     }
 
     @Override
@@ -155,31 +157,45 @@ public class MapsFragment extends BaseFragment implements OnMapReadyCallback, Lo
     }
 
     private void addMarker(LatLng location) {
-        // map.setMyLocationEnabled(true);
-        // Zoom in the Google Map
-        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(location, 15));
 
         googleMap.addMarker(new MarkerOptions()
                 .position(location)
                 .title("You")
-                .snippet("You are here!!"));
-        googleMap.animateCamera(CameraUpdateFactory.zoomTo(14));
+                .snippet("You are here!!")
+                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
+
+        // Zoom in the Google Map
+        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(location, 10));
+        //googleMap.animateCamera(CameraUpdateFactory.zoomTo(14));
+
+        getLoaderManager().initLoader(LOCATION_LOADER, null, this);
     }
 
     private void addMarker(LatLng location, String title, String snippet) {
         // map.setMyLocationEnabled(true);
         // Zoom in the Google Map
-        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(location, 15));
+        //googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(location, 15));
 
         googleMap.addMarker(new MarkerOptions()
                 .position(location)
                 .title(title)
-                .snippet(snippet));
-        googleMap.animateCamera(CameraUpdateFactory.zoomTo(14));
+                .snippet(snippet)
+                .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_maps_distance)));
+        //googleMap.animateCamera(CameraUpdateFactory.zoomTo(14));
     }
 
-    public void moveCameraTo(LatLng location) {
-        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(location, 15));
+    public void moveCameraTo(GoogleMap mapInstace, LatLng location) {
+        final CameraPosition cameraPosition = new CameraPosition.Builder()
+                .target(location)      // Sets the center of the map to Mountain View
+                .zoom(13)                   // Sets the zoom
+                .bearing(90)                // Sets the orientation of the camera to east
+                .tilt(30)                   // Sets the tilt of the camera to 30 degrees
+                .build();                   //
+        //mapInstace.addMarker(new MarkerOptions().position(new LatLng(companyDetail.getLatitude(), companyDetail.getLongitude())).title("Marker"));
+        mapInstace.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+
+        //mapInstace.moveCamera(CameraUpdateFactory.newLatLngZoom(location, 40));
+        //mapInstace.animateCamera(CameraUpdateFactory.zoomTo(14));
     }
 
     @Override
@@ -197,6 +213,9 @@ public class MapsFragment extends BaseFragment implements OnMapReadyCallback, Lo
                 LatLng coordinate = new LatLng(lat, lng);
                 addMarker(coordinate, location.carModel, "");
             }
+
+            //To access GoogleMaps instance in details fragment
+            ApplicationState.getInstance().getEventBus().post(new MapReadyEvent(googleMap));
         }
     }
 

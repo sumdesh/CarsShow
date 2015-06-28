@@ -59,10 +59,6 @@ public class CarsListViewFragment extends BaseListFragment implements AdapterVie
         setEmptyText(getString(R.string.loading));
         getListView().setOnItemClickListener(this);
 
-        if (!NetworkUtility.isNetworkAvailable(getActivity())){
-            Crouton.makeText(getActivity(), R.string.internet_connection_error, Style.ALERT).show();
-        }
-
         if (displayList != null){
             loadList(displayList);
         }else{

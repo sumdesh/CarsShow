@@ -53,16 +53,6 @@ public class MainActivity extends ActionBarActivity
             setProgressBarIndeterminateVisibility(true);
             Intent service = new Intent(MainActivity.this, CarsInfoDownloadService.class);
             startService(service);
-        }else{
-            Crouton.makeText(this, R.string.internet_connection_error, Style.ALERT).show();
-        }
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        if (!NetworkUtility.isNetworkAvailable(this)){
-            Crouton.makeText(this, R.string.internet_connection_error, Style.ALERT).show();
         }
     }
 
